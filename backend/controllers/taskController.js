@@ -40,9 +40,6 @@ const createTask = async (req, res) => {
   if (!description) {
     emplyFields.push("description");
   }
-  if (!completed) {
-    emplyFields.push("completed");
-  }
   if (emplyFields.length > 0) {
     return res
       .status(400)

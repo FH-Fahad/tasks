@@ -9,7 +9,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await signup({ email, password });
+    await signup(email, password);
   };
 
   return (
@@ -28,9 +28,7 @@ const Signup = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Signup"}
-        </button>
+        <button disabled={loading}>{loading ? "Loading..." : "Signup"}</button>
       </form>
       {error && <p>{error}</p>}
     </div>

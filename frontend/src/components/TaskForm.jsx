@@ -11,23 +11,13 @@ const TaskForm = () => {
   const [description, setDescription] = useState("");
   const [completed, setCompleted] = useState(false);
   const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
+  // const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
-    e.prevantDefault();
+    e.preventDefault();
 
     if (!user) {
       setError("You must be logged in to create a task");
-      return;
-    }
-
-    if (!title || !description) {
-      const fields = [];
-
-      if (!title) fields.push("title");
-      if (!description) fields.push("description");
-
-      setEmptyFields(fields);
       return;
     }
 
@@ -46,8 +36,7 @@ const TaskForm = () => {
 
     if (!response.ok) {
       setError(data.message);
-      setEmptyFields([]);
-      return;
+      // setEmptyFields(data.emptyFields);
     }
 
     if (response.ok) {
@@ -55,7 +44,7 @@ const TaskForm = () => {
       setDescription("");
       setCompleted(false);
       setError(null);
-      setEmptyFields([]);
+      // setEmptyFields([]);
 
       dispatch({ type: "ADD_TASK", payload: data });
     }
@@ -65,22 +54,24 @@ const TaskForm = () => {
     <div className="task-form">
       <h2>Create a new task</h2>
       <form onSubmit={handleSubmit}>
-        <label>Title</label>
+        {/* <label>Title</label> */}
         <input
           type="text"
           id="title"
           value={title}
+          placeholder="Title"
           onChange={(e) => setTitle(e.target.value)}
-          className={emptyFields.includes("title") ? "empty" : ""}
+          // className={emptyFields.includes("title") ? "error" : ""}
         />
-        <label>Description</label>
+        {/* <label>Description</label> */}
         <textarea
           id="description"
           value={description}
+          placeholder="Description"
           onChange={(e) => setDescription(e.target.value)}
-          className={emptyFields.includes("description") ? "empty" : ""}
+          // className={emptyFields.includes("description") ? "empty" : ""}
         />
-        <label>Completed</label>
+        {/* <label>Completed</label> */}
         <input
           type="checkbox"
           id="completed"
