@@ -35,15 +35,10 @@ const createTask = async (req, res) => {
   let emplyFields = [];
 
   if (!title) {
-    emplyFields.push("title");
-  }
-  if (!description) {
-    emplyFields.push("description");
+    emplyFields.push("Title");
   }
   if (emplyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ message: `The following fields are required: ${emplyFields}` });
+    return res.status(400).json({ message: `Title field is required` });
   }
 
   try {

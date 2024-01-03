@@ -1,3 +1,239 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --primary: #1aac83;
+    --error: #e7195a;
+}
+
+body {
+    background: #f1f1f1;
+    margin: 0;
+    font-family: "Poppins";
+}
+
+header {
+    background: #fff;
+}
+
+header .container {
+    max-width: 1400px;
+    height: 80px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a {
+    color: #333;
+    text-decoration: none;
+}
+
+header .container h1 {
+    font-style: bold;
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header .container nav {
+    font-size: 1.2em;
+}
+
+.pages {
+    max-width: 1080px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* homepage */
+.home {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    font-size: 16px;
+}
+
+.create {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: left;
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.task-details {
+    background: #fff;
+    border-radius: 4px;
+    margin: 20px 20px 20px 20px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.task-details h2 {
+    font-size: 1.4em;
+    font-style: bold;
+    color: var(--primary);
+}
+
+.task-details p {
+    margin: 0;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.task-details .align {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-details span {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    background: #f1f1f1;
+    padding: 6px;
+    border-radius: 50%;
+    color: #333;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.checkbox-container .checkbox {
+    /* display: flex;
+    align-items: center;
+    justify-items: center; */
+    width: 20px;
+}
+
+/* new workout form */
+label,
+input {
+    display: block;
+}
+
+input,
+textarea {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    border: 0;
+    color: #fff;
+    padding: 10px;
+    font-family: "Poppins";
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button {
+    background: var(--primary);
+}
+
+.button {
+    background: var(--primary);
+    width: 120px;
+}
+
+.completebutton {
+    background: var(--primary);
+    width: auto;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.deletebutton {
+    background: var(--error);
+    width: 60px;
+    padding: 5px;
+}
+
+.error {
+    padding: 10px;
+    background: #ffefef;
+    border: 1px solid var(--error);
+    color: var(--error);
+    border-radius: 4px;
+    padding-top: 10px;
+    margin: 20px 0;
+}
+
+input.error {
+    border: 1px solid var(--error);
+}
+
+/* navbar */
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a,
+nav button {
+    margin-left: 10px;
+}
+
+nav .userinfo {
+    font-size: 1em;
+    margin-right: 5px;
+}
+
+nav button {
+    background: #fff;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: "Poppins";
+    cursor: pointer;
+    font-size: 1em;
+}
+
+/* auth forms */
+form.signup,
+form.login {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+}
+
+form h2 {
+    margin: 0 0 20px 2px;
+    font-size: 1.5em;
+    color: var(--primary);
+}
+
+@media (max-width: 699px) {
+    .home {
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .create {
+        margin: 0 auto;
+        width: 80%;
+        margin-bottom: 50px;
+    }
+
+    .task-details {
+        margin: 0;
+    }
+}

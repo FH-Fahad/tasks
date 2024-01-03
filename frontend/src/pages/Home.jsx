@@ -32,12 +32,13 @@ const Home = () => {
   }, [user, dispatch]);
 
   return (
-    <div className="container">
+    <div className="home">
       <TaskForm />
       <div className="tasks">
         {tasks.map((task) => (
           <TaskDetails key={task._id} task={task} />
         ))}
+        <br />
       </div>
     </div>
   );

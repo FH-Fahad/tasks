@@ -12,7 +12,6 @@ function App() {
 
   return (
     <>
-      <h1>App.jsx</h1>
       <Navbar />
       <div>
         <Routes>

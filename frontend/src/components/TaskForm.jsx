@@ -11,7 +11,6 @@ const TaskForm = () => {
   const [description, setDescription] = useState("");
   const [completed, setCompleted] = useState(false);
   const [error, setError] = useState(null);
-  // const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,52 +35,73 @@ const TaskForm = () => {
 
     if (!response.ok) {
       setError(data.message);
-      // setEmptyFields(data.emptyFields);
     }
 
     if (response.ok) {
+      await dispatch({ type: "ADD_TASK", payload: data });
+
+      await fetchTasks();
+
       setTitle("");
       setDescription("");
       setCompleted(false);
       setError(null);
-      // setEmptyFields([]);
+    }
+  };
 
-      dispatch({ type: "ADD_TASK", payload: data });
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/tasks", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "SET_TASKS", payload: data });
+      } else {
+        setError(data.message);
+      }
+    } catch (error) {
+      setError(error.message);
     }
   };
 
   return (
-    <div className="task-form">
-      <h2>Create a new task</h2>
-      <form onSubmit={handleSubmit}>
-        {/* <label>Title</label> */}
-        <input
-          type="text"
-          id="title"
-          value={title}
-          placeholder="Title"
-          onChange={(e) => setTitle(e.target.value)}
-          // className={emptyFields.includes("title") ? "error" : ""}
-        />
-        {/* <label>Description</label> */}
-        <textarea
-          id="description"
-          value={description}
-          placeholder="Description"
-          onChange={(e) => setDescription(e.target.value)}
-          // className={emptyFields.includes("description") ? "empty" : ""}
-        />
-        {/* <label>Completed</label> */}
+    <form className="create" onSubmit={handleSubmit}>
+      <h2>Create New Task</h2>
+      <input
+        type="text"
+        id="title"
+        value={title}
+        placeholder="Title"
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <textarea
+        id="description"
+        rows="3"
+        value={description}
+        placeholder="Description"
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      {/* <div className="checkbox-container">
+        <label>Completed</label>
         <input
           type="checkbox"
           id="completed"
           checked={completed}
+          className="checkbox"
+          placeholder="Completed"
           onChange={(e) => setCompleted(e.target.checked)}
         />
-        <button type="submit">Create</button>
-      </form>
+      </div> */}
+      <button className="button">Create Task</button>
       {error && <p className="error">{error}</p>}
-    </div>
+    </form>
   );
 };
 
