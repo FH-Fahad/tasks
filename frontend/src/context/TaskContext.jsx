@@ -11,7 +11,7 @@ export const taskReducer = (state, action) => {
       };
     case "ADD_TASK":
       return {
-        tasks: [...state.tasks, action.payload],
+        tasks: [action.payload, ...state.tasks],
       };
     case "DELETE_TASK":
       return {

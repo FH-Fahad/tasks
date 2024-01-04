@@ -9,8 +9,9 @@
 
 body {
     background: #f1f1f1;
-    margin: 0;
     font-family: "Poppins";
+    margin: 0 auto;
+    min-width: 275px;
 }
 
 header {
@@ -43,7 +44,7 @@ header .container nav {
 }
 
 .pages {
-    max-width: 1080px;
+    max-width: 1400px;
     padding: 20px;
     margin: 0 auto;
 }
@@ -58,10 +59,20 @@ header .container nav {
 .create {
     display: flex;
     flex-direction: column;
-    justify-content: start;
     align-items: left;
     margin-top: 20px;
     margin-left: 40px;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.empty {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 2em;
+    color: var(--primary)
 }
 
 .task-details {
@@ -83,6 +94,7 @@ header .container nav {
     margin: 0;
     font-size: 1.1em;
     color: #555;
+    margin-bottom: 10px;
 }
 
 .task-details .align {
@@ -98,7 +110,7 @@ header .container nav {
     cursor: pointer;
     background: #f1f1f1;
     padding: 6px;
-    border-radius: 50%;
+    border-radius: 10px;
     color: #333;
 }
 
@@ -125,7 +137,7 @@ input,
 textarea {
     padding: 10px;
     margin-top: 10px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     width: 100%;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -139,27 +151,27 @@ button {
     font-family: "Poppins";
     border-radius: 4px;
     cursor: pointer;
+    width: auto;
+    margin-top: 10px;
 }
 
 form button {
     background: var(--primary);
+    width: 120px;
 }
 
 .button {
     background: var(--primary);
-    width: 120px;
 }
 
 .completebutton {
     background: var(--primary);
-    width: auto;
     padding: 5px;
     margin-top: 5px;
 }
 
 .deletebutton {
     background: var(--error);
-    width: 60px;
     padding: 5px;
 }
 
@@ -220,7 +232,18 @@ form h2 {
     color: var(--primary);
 }
 
-@media (max-width: 699px) {
+@media (max-width: 800px) {
+    .pages {
+        padding: 5px;
+    }
+
+    .create {
+        margin-left: 20px;
+    }
+
+}
+
+@media (max-width: 575px) {
     .home {
         margin: 20px;
         display: flex;
@@ -230,10 +253,20 @@ form h2 {
     .create {
         margin: 0 auto;
         width: 80%;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
     }
 
     .task-details {
-        margin: 0;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 424px) {
+    .home {
+        margin: 10px;
+    }
+
+    .create {
+        width: 95%;
     }
 }

@@ -9,36 +9,48 @@ const Home = () => {
   const { user } = useAuthContext();
   const { tasks, dispatch } = useTaskContext();
 
-  useEffect(() => {
-    const getTasks = async () => {
-      if (!user) return;
+  useEffect(
+    () => async () => {
+      const getTasks = async () => {
+        if (!user) return;
 
-      const response = await fetch("http://localhost:4000/api/tasks", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+        const response = await fetch("/api/tasks", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (response.ok) {
-        dispatch({ type: "SET_TASKS", payload: data });
+        if (response.ok) {
+          dispatch({ type: "SET_TASKS", payload: data });
+        }
+      };
+
+      if (user) {
+        await getTasks();
       }
-    };
-
-    if (user) {
-      getTasks();
-    }
-  }, [user, dispatch]);
+    },
+    [user, dispatch]
+  );
 
   return (
-    <div className="home">
+    // <div className="home pages">
+    //   <TaskForm />
+    //   <div className="tasks">
+    //     {tasks.map((task) => (
+    //       <TaskDetails key={task._id} task={task} />
+    //     ))}
+    //   </div>
+    // </div>
+
+    <div className="home pages">
       <TaskForm />
       <div className="tasks">
+        {tasks.length === 0 && <p className="empty">No tasks yet!</p>}
         {tasks.map((task) => (
           <TaskDetails key={task._id} task={task} />
         ))}
-        <br />
       </div>
     </div>
   );

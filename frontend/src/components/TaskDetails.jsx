@@ -2,18 +2,33 @@
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useTaskContext } from "../hooks/useTaskContext";
 
+import { useEffect, useState } from "react";
+
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 // eslint-disable-next-line react/prop-types
 const TaskDetails = ({ task }) => {
   const { dispatch } = useTaskContext();
   const { user } = useAuthContext();
+  const [timeAgo, setTimeAgo] = useState(
+    formatDistanceToNow(new Date(task.createdAt), { addSuffix: true })
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeAgo(
+        formatDistanceToNow(new Date(task.createdAt), { addSuffix: true })
+      );
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [task.createdAt, task.selectedDate]);
 
   const handleDelete = async (id) => {
     if (!user) return;
 
     try {
-      const response = await fetch(`http://localhost:4000/api/tasks/${id}`, {
+      const response = await fetch(`/api/tasks/${id}`, {
         method: "DELETE",
         headers: {
           "Content-type": "application/json",
@@ -26,11 +41,9 @@ const TaskDetails = ({ task }) => {
       if (response.ok) {
         dispatch({ type: "DELETE_TASK", payload: data });
       } else {
-        // Handle the error, e.g., show a notification to the user
         console.error("Failed to delete task on the server:", data.error);
       }
     } catch (error) {
-      // Handle unexpected errors, e.g., show a notification to the user
       console.error("An unexpected error occurred:", error);
     }
   };
@@ -38,7 +51,6 @@ const TaskDetails = ({ task }) => {
   const handleComplete = async (id) => {
     if (!user) return;
 
-    // Optimistic UI Update
     const updatedTask = {
       ...task,
       completed: !task.completed,
@@ -47,7 +59,7 @@ const TaskDetails = ({ task }) => {
     dispatch({ type: "COMPLETE_TASK", payload: updatedTask });
 
     try {
-      const response = await fetch(`http://localhost:4000/api/tasks/${id}`, {
+      const response = await fetch(`/api/tasks/${id}`, {
         method: "PATCH",
         headers: {
           "Content-type": "application/json",
@@ -59,34 +71,26 @@ const TaskDetails = ({ task }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        // Revert the update if there's an issue with the server
         dispatch({ type: "COMPLETE_TASK", payload: task });
-        // Handle the error, e.g., show a notification to the user
         console.error("Failed to update task on the server:", data.error);
       }
     } catch (error) {
-      // Revert the update if there's an exception during the fetch
       dispatch({ type: "COMPLETE_TASK", payload: task });
-      // Handle the error, e.g., show a notification to the user
       console.error("An unexpected error occurred:", error);
     }
   };
 
-  // FIXME: fix this complete button
-  // FIXME: fix this delete button
   return (
     <div className="task-details">
-      <h2>{task.title}</h2>
+      <h2 className={task.completed ? "done" : ""}>{task.title}</h2>
       <p>{task.description}</p>
-      <p>
-        {formatDistanceToNow(new Date(task.createdAt), { addSuffix: true })}
-      </p>
+      <span>{timeAgo}</span>
       <div className="align">
         <button
-          className="completebutton"
+          className={`completebutton ${task.completed ? "" : "deletebutton"}`}
           onClick={() => handleComplete(task._id)}
         >
-          {task.completed ? "Complete" : " Not Complete"}
+          {task.completed ? "Completed" : " Not Complete"}
         </button>
 
         {user && (
@@ -99,7 +103,6 @@ const TaskDetails = ({ task }) => {
         )}
       </div>
     </div>
-    //TODO: add a button to complete the task
   );
 };
 

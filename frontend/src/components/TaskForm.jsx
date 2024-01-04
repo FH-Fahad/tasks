@@ -22,7 +22,7 @@ const TaskForm = () => {
 
     const task = { title, description, completed };
 
-    const response = await fetch("http://localhost:4000/api/tasks", {
+    const response = await fetch("/api/tasks", {
       method: "POST",
       body: JSON.stringify(task),
       headers: {
@@ -38,36 +38,11 @@ const TaskForm = () => {
     }
 
     if (response.ok) {
-      await dispatch({ type: "ADD_TASK", payload: data });
-
-      await fetchTasks();
-
       setTitle("");
       setDescription("");
       setCompleted(false);
       setError(null);
-    }
-  };
-
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/api/tasks", {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        dispatch({ type: "SET_TASKS", payload: data });
-      } else {
-        setError(data.message);
-      }
-    } catch (error) {
-      setError(error.message);
+      dispatch({ type: "ADD_TASK", payload: data });
     }
   };
 
@@ -88,17 +63,6 @@ const TaskForm = () => {
         placeholder="Description"
         onChange={(e) => setDescription(e.target.value)}
       />
-      {/* <div className="checkbox-container">
-        <label>Completed</label>
-        <input
-          type="checkbox"
-          id="completed"
-          checked={completed}
-          className="checkbox"
-          placeholder="Completed"
-          onChange={(e) => setCompleted(e.target.checked)}
-        />
-      </div> */}
       <button className="button">Create Task</button>
       {error && <p className="error">{error}</p>}
     </form>

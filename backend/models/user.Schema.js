@@ -29,10 +29,8 @@ userSchema.statics.signup = async function (email, password) {
     throw Error("Invalid email");
   }
 
-  if (!validator.isStrongPassword(password)) {
-    let passwordRequirements = `Password must be at least 8 characters long and\ncontain at least 1 lowercase,\n1 uppercase,\n1 number, and 1 symbol`;
-
-    throw Error(passwordRequirements);
+  if (password.length < 6) {
+    throw Error("Password must be 6 characters long");
   }
 
   const exists = await this.findOne({ email });
@@ -71,4 +69,4 @@ userSchema.statics.login = async function (email, password) {
   return user;
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Account", userSchema);

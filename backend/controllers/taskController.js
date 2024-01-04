@@ -4,13 +4,9 @@ const mongoose = require("mongoose");
 const getTasks = async (req, res) => {
   const user_id = req.user._id;
 
-  try {
-    const tasks = await Task.find({ user_id }).sort({ createdAt: -1 });
+  const tasks = await Task.find({ user_id }).sort({ createdAt: -1 });
 
-    res.status(200).json(tasks);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+  res.status(200).json(tasks);
 };
 
 const getTask = async (req, res) => {
@@ -30,7 +26,7 @@ const getTask = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
-  const { title, description, completed } = req.body;
+  const { title, description, completed, endDate } = req.body;
 
   let emplyFields = [];
 
@@ -44,7 +40,13 @@ const createTask = async (req, res) => {
   try {
     const user_id = req.user._id;
 
-    const task = await Task.create({ title, description, completed, user_id });
+    const task = await Task.create({
+      title,
+      description,
+      completed,
+      endDate,
+      user_id,
+    });
     res.status(201).json(task);
   } catch (error) {
     res.status(400).json({ error: error.message });
