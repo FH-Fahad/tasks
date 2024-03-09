@@ -14,6 +14,20 @@ body {
     min-width: 275px;
 }
 
+/* custom scroll bar */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 header {
     background: #fff;
 }
@@ -84,9 +98,18 @@ header .container nav {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 
+.description {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
 .task-details h2 {
     font-size: 1.4em;
     font-style: bold;
+    margin-bottom: 10px;
     color: var(--primary);
 }
 
@@ -101,6 +124,7 @@ header .container nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
 }
 
 .task-details span {
@@ -133,6 +157,12 @@ input {
     display: block;
 }
 
+input::placeholder,
+textarea::placeholder {
+    color: #999;
+    font-size: 16px;
+}
+
 input,
 textarea {
     padding: 10px;
@@ -142,6 +172,11 @@ textarea {
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+textarea {
+    min-width: none;
+    min-height: 100px;
 }
 
 button {

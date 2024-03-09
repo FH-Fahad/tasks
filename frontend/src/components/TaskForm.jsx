@@ -20,7 +20,7 @@ const TaskForm = () => {
       return;
     }
 
-    const task = { title, description, completed };
+    const task = { title, description: JSON.stringify(description), completed };
 
     const response = await fetch("/api/tasks", {
       method: "POST",
@@ -49,6 +49,7 @@ const TaskForm = () => {
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h2>Create New Task</h2>
+      {error && <p className="error">{error}</p>}
       <input
         type="text"
         id="title"
@@ -64,7 +65,6 @@ const TaskForm = () => {
         onChange={(e) => setDescription(e.target.value)}
       />
       <button className="button">Create Task</button>
-      {error && <p className="error">{error}</p>}
     </form>
   );
 };
